@@ -1,5 +1,6 @@
 
   var step = 1
+  var instructions = document.getElementById("instructions")
   //~~~~~~~~~~solve maze~~~~~~~~~~~~~~~~~~~~~~~
   const indexOfAll = (arr, val) => arr.reduce((acc, el, i) => (el === val ? [...acc, i] : acc), []);
   function pathFinder(maze){
@@ -9,10 +10,12 @@
     var mazeLength = maze.length;
     checkIt(maze,mazeLength,end);
     if(maze[end[0]][end[1]] == "."){
-    return "this maze is unsolveable";
+        instructions.innerHTML = "this maze is unsolveable";
     }
     else{
       paintpath(maze,mazeLength,end[0],end[1])
+      instructions.innerHTML = "this maze was solved in " + maze[end[0]][end[1]] + " moves";
+
 return
     }
   }
@@ -101,15 +104,27 @@ return
   function makeCellsClickable(){
   var cells = document.querySelectorAll("td");
   for (var cell of cells) {
+    // cell.addEventListener('touchmove', cellhovered)
     cell.addEventListener('click', cellClick)
   }
   }
+
+//   function cellhovered(){
+//     if(step>2){
+//     resetResults()
+//     paintCell(this)
+//     }
+//   }
+
   function cellClick(){
     if(step==1){
       setStart(this)
+      instructions.innerHTML = "set ending point";
     }
     if(step==2){
       setEnd(this)
+      instructions.innerHTML = "set walls"
+
     }
     if(step>2){
     resetResults()
